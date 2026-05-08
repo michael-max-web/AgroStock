@@ -1,0 +1,49 @@
+.botao-customizado__root {
+  width: 100%;
+  padding: 15px 18px;
+
+  border: none;
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+
+  box-shadow: var(--shadow);
+}
+
+.botao-customizado__primario {
+  background: linear-gradient(
+    135deg,
+    var(--cor-primaria),
+    #2d8a76
+  );
+
+  color: white;
+}
+
+.botao-customizado__primario:hover {
+  transform: translateY(-2px);
+  background: var(--cor-primaria-hover);
+}
+
+.botao-customizado__secundario {
+  background: linear-gradient(
+    135deg,
+    var(--cor-secundaria),
+    #e8ba65
+  );
+
+  color: white;
+}
+
+.botao-customizado__secundario:hover {
+  transform: translateY(-2px);
+}
+
+.botao-customizado__root:active {
+  transform: scale(0.98);
+}

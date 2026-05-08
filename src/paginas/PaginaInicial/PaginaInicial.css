@@ -1,0 +1,157 @@
+.pagina-inicial {
+  min-height: calc(100vh - 60px);
+
+  margin: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  background:
+    linear-gradient(
+      rgba(15, 23, 42, 0.55),
+      rgba(15, 23, 42, 0.55)
+    ),
+    url("https://blog.syngentadigital.ag/wp-content/uploads/2017/09/mao-pegando-graos-de-soja-1600x900.jpg");
+
+  background-size: cover;
+  background-position: center;
+
+  overflow: hidden;
+
+  box-shadow: var(--shadow);
+}
+
+.pagina-inicial__card {
+  width: 100%;
+  max-width: 520px;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  backdrop-filter: blur(10px);
+
+  border-radius: 28px;
+
+  padding: 42px 34px;
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.22);
+
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.pagina-inicial__conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pagina-inicial__tag {
+  width: fit-content;
+
+  background: rgba(31, 111, 95, 0.12);
+
+  color: var(--cor-primaria);
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.pagina-inicial__conteudo h1 {
+  font-size: 42px;
+  line-height: 1.1;
+
+  color: var(--cor-texto);
+
+  font-weight: 800;
+}
+
+.pagina-inicial__conteudo p {
+  color: var(--cor-texto-secundario);
+
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.pagina-inicial__botoes {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+
+  margin-top: 10px;
+}
+
+.botao-home {
+  width: 100%;
+
+  padding: 16px;
+
+  border: none;
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  transition: 0.25s ease;
+}
+
+.botao-home:hover {
+  transform: translateY(-2px);
+}
+
+.botao-home.primario {
+  background: linear-gradient(
+    135deg,
+    var(--cor-primaria),
+    #2f8f79
+  );
+
+  color: white;
+
+  box-shadow:
+    0 10px 20px rgba(31, 111, 95, 0.22);
+}
+
+.botao-home.secundario {
+  background: linear-gradient(
+    135deg,
+    var(--cor-secundaria),
+    #efbe68
+  );
+
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .pagina-inicial {
+    min-height: 72vh;
+
+    border-radius: 22px;
+  }
+
+  .pagina-inicial__card {
+    padding: 28px 22px;
+
+    border-radius: 24px;
+  }
+
+  .pagina-inicial__conteudo h1 {
+    font-size: 30px;
+  }
+
+  .pagina-inicial__conteudo p {
+    font-size: 14px;
+  }
+}

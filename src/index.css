@@ -1,0 +1,52 @@
+:root {
+  --cor-primaria: #1f6f5f;
+  --cor-primaria-hover: #195548;
+
+  --cor-secundaria: #d4a24c;
+  --cor-secundaria-hover: #b88634;
+
+  --cor-fundo: #f3f6f4;
+  --cor-card: #ffffff;
+
+  --cor-texto: #1e293b;
+  --cor-texto-secundario: #64748b;
+
+  --cor-borda: #dbe3dd;
+
+  --cor-sucesso: #16a34a;
+  --cor-erro: #dc2626;
+
+  --radius: 18px;
+
+  --shadow:
+    0 4px 10px rgba(15, 23, 42, 0.04),
+    0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, #e9f4ef 0%, transparent 35%),
+    radial-gradient(circle at bottom right, #f8f1df 0%, transparent 35%),
+    var(--cor-fundo);
+
+  color: var(--cor-texto);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}

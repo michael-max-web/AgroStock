@@ -1,0 +1,120 @@
+.container-tabela {
+  margin: 20px;
+  background: var(--cor-card);
+  border-radius: var(--radius);
+  padding: 20px;
+  border: 1px solid var(--cor-borda);
+}
+
+/* busca */
+.busca-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.input-busca {
+  margin: 15px;
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--cor-borda);
+  background: #fafafa;
+}
+
+/* tabela */
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+  padding: 10px;
+  text-align: left;
+}
+
+.tabela td {
+  padding: 12px 10px;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.tabela tr:hover {
+  background: #f9fafb;
+}
+
+/* input */
+.input-qtd {
+  width: 60px;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid var(--cor-borda);
+}
+
+/* botão excluir */
+.btn-excluir {
+  background: transparent;
+  border: none;
+  color: var(--cor-erro);
+  cursor: pointer;
+}
+
+/* botão adicionar */
+.botao-adicionar {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--cor-primaria);
+  color: white;
+  border-radius: 50%;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+
+.botao-adicionar:hover {
+  background: var(--cor-primaria-hover);
+}
+
+.lista-cards {
+  display: none;
+}
+
+.card {
+  background: var(--cor-card);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 10px;
+  border: 1px solid var(--cor-borda);
+}
+
+.card-header {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.card-body p {
+  font-size: 14px;
+  color: var(--cor-texto-secundario);
+}
+
+.card-footer {
+  margin-top: 8px;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .container-tabela {
+    display: none;
+  }
+
+  .lista-cards {
+    display: block;
+  }
+
+  .busca-container {
+    flex-direction: column;
+  }
+}

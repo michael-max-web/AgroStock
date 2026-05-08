@@ -1,0 +1,38 @@
+.campo-customizado__root {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo-customizado__root span {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.campo-customizado__input {
+  width: 100%;
+
+  padding: 14px;
+
+  border-radius: 14px;
+  border: 1px solid var(--cor-borda);
+
+  background: #fcfcfc;
+
+  transition: 0.2s ease;
+}
+
+.campo-customizado__input:focus {
+  outline: none;
+
+  border-color: var(--cor-primaria);
+
+  background: white;
+
+  box-shadow: 0 0 0 4px rgba(31, 111, 95, 0.08);
+}
+
+.campo-customizado__obrigatorio {
+  color: var(--cor-erro);
+}
