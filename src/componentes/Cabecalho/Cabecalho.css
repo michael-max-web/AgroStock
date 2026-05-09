@@ -1,26 +1,21 @@
-.cabecalho__root {
+.cabecalho--topo {
   width: 100%;
-
-  min-height: 70px;
-
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: 14px 20px;
+  padding: 0 5%;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-sizing: border-box;
 }
 
-.cabecalho__root img {
-  width: 140px;
-  height: auto;
+.cabecalho--topo img { height: 35px; width: auto; }
+
+.cabecalho--no-card {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
-  .cabecalho__root {
-    padding: 10px 4px;
-  }
-
-  .cabecalho__root img {
-    width: 120px;
-  }
-}
+.cabecalho--no-card img { height: 50px; width: auto; }

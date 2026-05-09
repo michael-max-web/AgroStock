@@ -1,11 +1,11 @@
 import Avatar from "../Avatar/Avatar";
 import "./Cabecalho.css";
 
-function Cabecalho() {
+function Cabecalho({ noCard }) {
   return (
-    <header className="cabecalho__root">
-      <img src="/logo.png" height="32" alt="Logo" />
-      <Avatar nome=" Agro Stock" />
+    <header className={noCard ? "cabecalho--no-card" : "cabecalho--topo"}>
+      <img src="/logo.png" alt="AgroStock Logo" />
+      {!noCard && <Avatar nome="Agro Stock" />}
     </header>
   );
 }

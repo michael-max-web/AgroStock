@@ -1,219 +1,132 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
-import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 import Principal from "../../componentes/Principal/Principal";
-import { useNavigate } from "react-router-dom";
-import "./CadastroProduto.css";
+import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
+import "./CadastroProduto.css"; // Certifique-se de importar o CSS
 
 function CadastroProduto() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const location = useLocation();
 
-  const [produto, setProduto] = useState({
+  const [form, setForm] = useState({
     lote: "",
     descricaoProduto: "",
     quantidadePorPalete: "",
     dataValidade: "",
-    posicao: "",
+    posicao: ""
   });
 
-  // 🔍 Validação de lote
-  function validarLote(lote) {
-    const regex = /^[A-Z]{3}\d{7}$/;
-    return regex.test(lote);
-  }
+  const queryParams = new URLSearchParams(location.search);
+  const veioDaLista = queryParams.get("origem") === "lista";
 
-  // 🔍 Validação de posição
-  function validarPosicao(posicao) {
-    const regex = /^\d+[A-Z]-\d{2}-\d{2}$/;
-    return regex.test(posicao);
-  }
+  useEffect(() => {
+    if (id) {
+      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      const produtoParaEditar = produtos.find(p => p.id === id);
+      if (produtoParaEditar) setForm(produtoParaEditar);
+    }
+  }, [id]);
 
-  const salvar = () => {
-    // ✅ LOTE
-    if (!produto.lote.trim()) {
-      toast.error("Lote é obrigatório!");
-      return;
+  const validarLote = (lote) => {
+    const regexLote = /^[A-Z]{3}\d{7}$/;
+    return regexLote.test(lote);
+  };
+
+  const salvar = (e) => {
+    e.preventDefault();
+    
+    if (!form.lote || !form.descricaoProduto || !form.quantidadePorPalete || !form.dataValidade || !form.posicao) {
+      return toast.warning("Todos os campos devem ser preenchidos!");
     }
 
-    if (!validarLote(produto.lote)) {
-      toast.error("Formato de lote inválido! Ex: SOJ2026001");
-      return;
+    if (!validarLote(form.lote)) {
+      return toast.error("Lote inválido!");
     }
 
-    // ✅ DESCRIÇÃO
-    if (!produto.descricaoProduto.trim()) {
-      toast.error("Descrição é obrigatória!");
-      return;
+    const dataHoje = new Date();
+    dataHoje.setHours(0, 0, 0, 0);
+    const dataInserida = new Date(form.dataValidade);
+    dataInserida.setHours(24, 0, 0, 0);
+
+    if (dataInserida < dataHoje) {
+      return toast.error("Data de validade vencida!");
     }
 
-    // ✅ QUANTIDADE
-    if (
-      !produto.quantidadePorPalete ||
-      produto.quantidadePorPalete <= 0
-    ) {
-      toast.error(
-        "Quantidade por palete deve ser maior que zero!"
-      );
-      return;
-    }
-
-    // ✅ DATA OBRIGATÓRIA
-    if (!produto.dataValidade) {
-      toast.error("Data de validade é obrigatória!");
-      return;
-    }
-
-    // ✅ PRODUTO VENCIDO
-    const hoje = new Date();
-    const validade = new Date(produto.dataValidade);
-
-    hoje.setHours(0, 0, 0, 0);
-    validade.setHours(0, 0, 0, 0);
-
-    if (validade < hoje) {
-      toast.error("Esse produto está vencido!");
-      return;
-    }
-
-    // ✅ POSIÇÃO
-    if (!produto.posicao.trim()) {
-      toast.error("Posição é obrigatória!");
-      return;
-    }
-
-    if (!validarPosicao(produto.posicao)) {
-      toast.error("Posição inválida! Ex: 1A-02-10");
-      return;
-    }
-
-    const produtos =
-      JSON.parse(localStorage.getItem("produtos")) || [];
-
-    // 🚨 POSIÇÃO NÃO PODE REPETIR
-    const posicaoJaExiste = produtos.some(
-      (p) => p.posicao === produto.posicao
+    const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+    const posicaoOcupada = produtos.find(p => 
+      p.posicao.trim().toUpperCase() === form.posicao.trim().toUpperCase() && p.id !== id
     );
 
-    if (posicaoJaExiste) {
-      toast.error("Essa posição já está ocupada!");
-      return;
+    if (posicaoOcupada) {
+      return toast.error(`A posição ${form.posicao} já está ocupada!`);
     }
 
-    const novoProduto = {
-      id: crypto.randomUUID(),
-      ...produto,
-      quantidadePorPalete: Number(
-        produto.quantidadePorPalete
-      ),
-    };
-
-    produtos.push(novoProduto);
-
-    localStorage.setItem(
-      "produtos",
-      JSON.stringify(produtos)
-    );
-
-    toast.success("Palete cadastrado com sucesso!");
+    if (id) {
+      const listaAtualizada = produtos.map(p => p.id === id ? { ...form } : p);
+      localStorage.setItem("produtos", JSON.stringify(listaAtualizada));
+      toast.success("Atualizado com sucesso!");
+    } else {
+      const novo = { ...form, id: crypto.randomUUID() };
+      produtos.push(novo);
+      localStorage.setItem("produtos", JSON.stringify(produtos));
+      toast.success("Palete alocado com sucesso!");
+    }
 
     navigate("/lista-produtos");
   };
 
+  const destinoVoltar = (id || veioDaLista) ? "/lista-produtos" : "/";
+
   return (
-    <Principal titulo="Cadastro de Palete" voltarPara="/">
-      <div className="formulario">
-
-        <CampoCustomizado
-          label="Lote"
-          obrigatorio
-          value={produto.lote}
-          onChange={(e) =>
-            setProduto({
-              ...produto,
-              lote: e.target.value.toUpperCase(),
-            })
-          }
-          onBlur={(e) => {
-            if (
-              e.target.value.trim() &&
-              !validarLote(e.target.value)
-            ) {
-              toast.error(
-                "Formato de lote inválido! Ex: SOJ2026001"
-              );
-            }
-          }}
+    <Principal 
+      titulo={id ? "Editar Localização" : "Cadastro de Palete"} 
+      voltarPara={destinoVoltar}
+    >
+      <form className="formulario-container" onSubmit={salvar}>
+        
+        <CampoCustomizado 
+          label="Lote" 
+          placeholder="SOJ2026001"
+          value={form.lote} 
+          onChange={e => setForm({...form, lote: e.target.value.toUpperCase().trim()})} 
         />
 
-        <CampoCustomizado
-          label="Descrição do Produto"
-          obrigatorio
-          value={produto.descricaoProduto}
-          onChange={(e) =>
-            setProduto({
-              ...produto,
-              descricaoProduto: e.target.value,
-            })
-          }
+        <CampoCustomizado 
+          label="Endereço (Posição)" 
+          placeholder="1A-01-01"
+          value={form.posicao} 
+          onChange={e => setForm({...form, posicao: e.target.value.toUpperCase().trim()})} 
         />
 
-        <CampoCustomizado
-          type="number"
-          label="Quantidade (sacas por palete)"
-          obrigatorio
-          value={produto.quantidadePorPalete}
-          onChange={(e) =>
-            setProduto({
-              ...produto,
-              quantidadePorPalete: e.target.value,
-            })
-          }
+        {/* Div com classe especial para ocupar a linha toda */}
+        <div className="campo-descricao">
+          <CampoCustomizado 
+            label="Descrição do Produto" 
+            value={form.descricaoProduto} 
+            onChange={e => setForm({...form, descricaoProduto: e.target.value})} 
+          />
+        </div>
+
+        <CampoCustomizado 
+          label="Quantidade (Sacas)" 
+          type="number" 
+          value={form.quantidadePorPalete} 
+          onChange={e => setForm({...form, quantidadePorPalete: e.target.value})} 
         />
 
-        <CampoCustomizado
-          type="date"
-          label="Data de Validade"
-          obrigatorio
-          value={produto.dataValidade}
-          onChange={(e) =>
-            setProduto({
-              ...produto,
-              dataValidade: e.target.value,
-            })
-          }
+        <CampoCustomizado 
+          label="Data de Validade" 
+          type="date" 
+          value={form.dataValidade} 
+          onChange={e => setForm({...form, dataValidade: e.target.value})} 
         />
-
-        <CampoCustomizado
-          label="Posição (Ex: 1A-02-10)"
-          obrigatorio
-          value={produto.posicao}
-          onChange={(e) =>
-            setProduto({
-              ...produto,
-              posicao: e.target.value.toUpperCase(),
-            })
-          }
-          onBlur={(e) => {
-            if (
-              e.target.value.trim() &&
-              !validarPosicao(e.target.value)
-            ) {
-              toast.error(
-                "Posição inválida! Ex: 1A-02-10"
-              );
-            }
-          }}
-        />
-
-        <BotaoCustomizado
-          tipo="primario"
-          aoClicar={salvar}
-        >
-          Salvar
-        </BotaoCustomizado>
-
-      </div>
+        
+        <button type="submit" className="btn-finalizar">
+          {id ? "Salvar Alterações" : "Confirmar Alocação"}
+        </button>
+      </form>
     </Principal>
   );
 }

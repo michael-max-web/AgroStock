@@ -1,38 +1,28 @@
 .campo-customizado__root {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  width: 100%;
 }
 
 .campo-customizado__root span {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--cor-texto);
+  font-weight: 700;
+  color: #4a5568;
 }
 
 .campo-customizado__input {
   width: 100%;
-
-  padding: 14px;
-
-  border-radius: 14px;
-  border: 1px solid var(--cor-borda);
-
-  background: #fcfcfc;
-
-  transition: 0.2s ease;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1.5px solid #e2e8f0;
+  font-size: 16px; /* Evita zoom automático no iPhone */
+  box-sizing: border-box;
+  transition: 0.2s;
 }
 
 .campo-customizado__input:focus {
   outline: none;
-
-  border-color: var(--cor-primaria);
-
-  background: white;
-
-  box-shadow: 0 0 0 4px rgba(31, 111, 95, 0.08);
-}
-
-.campo-customizado__obrigatorio {
-  color: var(--cor-erro);
+  border-color: #1f6f5f;
+  box-shadow: 0 0 0 3px rgba(31, 111, 95, 0.1);
 }

@@ -1,24 +1,47 @@
-.formulario {
-  background: rgba(255, 255, 255, 0.7);
-
-  backdrop-filter: blur(12px);
-
-  border: 1px solid rgba(255, 255, 255, 0.4);
-
-  border-radius: 24px;
-
+.formulario-container {
+  background: var(--cor-card);
   padding: 30px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
+  border: 1px solid var(--cor-borda);
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr; /* Padrão celular: uma coluna */
 }
 
-@media (max-width: 768px) {
-  .formulario {
-    padding: 20px;
-    border-radius: 20px;
+/* Configuração para Tablet e Computador */
+@media (min-width: 768px) {
+  .formulario-container {
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
   }
+
+  /* Faz a Descrição ocupar as duas colunas */
+  .campo-descricao {
+    grid-column: span 2;
+  }
+
+  .btn-finalizar {
+    grid-column: span 2;
+    max-width: 400px; /* Evita que o botão fique largo demais */
+    margin: 20px auto 0; /* Centraliza o botão */
+    width: 100%;
+  }
+}
+
+.btn-finalizar {
+  margin-top: 10px;
+  padding: 18px;
+  background-color: var(--cor-primaria);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-finalizar:hover {
+  background-color: var(--cor-primaria-hover);
+  transform: translateY(-2px);
 }

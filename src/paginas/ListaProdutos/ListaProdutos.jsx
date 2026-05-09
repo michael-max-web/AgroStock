@@ -1,178 +1,120 @@
 import { useEffect, useState } from "react";
-import "./ListaProdutos.css";
-import Principal from "../../componentes/Principal/Principal";
-import { toast } from "react-toastify";
-import { MdAddCircle } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { MdAddCircle, MdEdit, MdDelete, MdSearch, MdFilterList } from "react-icons/md";
+import Principal from "../../componentes/Principal/Principal";
+import "./ListaProdutos.css";
 
 function ListaProdutos() {
   const navigate = useNavigate();
-
   const [produtos, setProdutos] = useState([]);
+  
+  // Estados separados para cada filtro
   const [buscaLote, setBuscaLote] = useState("");
-  const [buscaQuantidade, setBuscaQuantidade] = useState("");
+  const [buscaQtd, setBuscaQtd] = useState("");
 
   useEffect(() => {
-    carregarProdutos();
-  }, []);
-
-  function carregarProdutos() {
     const dados = JSON.parse(localStorage.getItem("produtos")) || [];
     setProdutos(dados);
-  }
+  }, []);
 
-  function excluir(id) {
-    if (confirm("Tem certeza que deseja excluir este palete?")) {
-      const novos = produtos.filter((p) => p.id !== id);
-      localStorage.setItem("produtos", JSON.stringify(novos));
-      setProdutos(novos);
-      toast.success("Palete excluído!");
+  const salvarNoStorage = (novaLista) => {
+    localStorage.setItem("produtos", JSON.stringify(novaLista));
+    setProdutos(novaLista);
+  };
+
+  const mudarQtd = (id, valor) => {
+    const atualizados = produtos.map(p => p.id === id ? { ...p, quantidadePorPalete: valor } : p);
+    salvarNoStorage(atualizados);
+  };
+
+  const excluir = (id) => {
+    if (window.confirm("Deseja realmente remover este item?")) {
+      const filtrados = produtos.filter(p => p.id !== id);
+      salvarNoStorage(filtrados);
+      toast.success("Removido com sucesso!");
     }
-  }
+  };
 
-  function atualizarQuantidade(id, novaQuantidade) {
-    if (novaQuantidade < 0) return;
-
-    const novos = produtos.map((p) => {
-      if (p.id === id) {
-        return {
-          ...p,
-          quantidadePorPalete: Number(novaQuantidade),
-        };
-      }
-      return p;
-    });
-
-    localStorage.setItem("produtos", JSON.stringify(novos));
-    setProdutos(novos);
-  }
-
+  // Lógica de Filtro Duplo
   const produtosFiltrados = produtos.filter((p) => {
-    const matchLote = p.lote
-      .toLowerCase()
-      .includes(buscaLote.toLowerCase());
+    const termoLote = buscaLote.toUpperCase().trim();
+    const termoQtd = buscaQtd.trim();
 
-    const matchQuantidade = buscaQuantidade
-      ? p.quantidadePorPalete === Number(buscaQuantidade)
-      : true;
+    // Se o campo estiver vazio, ele ignora aquele filtro (retorna true)
+    const matchLote = termoLote === "" || p.lote.toUpperCase().startsWith(termoLote);
+    const matchQtd = termoQtd === "" || p.quantidadePorPalete.toString() === termoQtd;
 
-    return matchLote && matchQuantidade;
+    return matchLote && matchQtd;
   });
 
   return (
-    <Principal voltarPara="/" titulo="Controle de Paletes">
-
-      {/* 🔍 BUSCAS */}
-      <div className="busca-container">
-  <input
-    type="text"
-    placeholder="Buscar por lote..."
-    className="input-busca"
-    value={buscaLote}
-    onChange={(e) => setBuscaLote(e.target.value)}
-  />
-
-  <input
-    type="number"
-    placeholder="Buscar por quantidade..."
-    className="input-busca"
-    value={buscaQuantidade}
-    onChange={(e) => setBuscaQuantidade(e.target.value)}
-  />
-</div>
-
- <div className="container-tabela">
-  <table className="tabela">
-    <thead>
-      <tr>
-        <th>Lote</th>
-        <th>Descrição</th>
-        <th>Qtd</th>
-        <th>Validade</th>
-        <th>Posição</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {produtosFiltrados.map((p) => (
-        <tr key={p.id}>
-          <td>{p.lote}</td>
-          <td>{p.descricaoProduto}</td>
-          <td>
-            <input
-              type="number"
-              value={p.quantidadePorPalete}
-              onChange={(e) =>
-                atualizarQuantidade(p.id, e.target.value)
-              }
-              className="input-qtd"
-            />
-          </td>
-          <td>{p.dataValidade || "-"}</td>
-          <td>{p.posicao}</td>
-          <td>
-            <button
-              className="btn-excluir"
-              onClick={() => excluir(p.id)}
-            >
-              Excluir
-            </button>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-
-{/* 📱 CARDS MOBILE */}
-<div className="lista-cards">
-  {produtosFiltrados.map((p) => (
-    <div className="card" key={p.id}>
-      <div className="card-header">
-        <strong>{p.lote}</strong>
-      </div>
-
-      <div className="card-body">
-        <p><b>Produto:</b> {p.descricaoProduto}</p>
-
-        <p>
-          <b>Qtd:</b>
-          <input
-            type="number"
-            value={p.quantidadePorPalete}
-            onChange={(e) =>
-              atualizarQuantidade(p.id, e.target.value)
-            }
-            className="input-qtd"
+    <Principal voltarPara="/" titulo="Inventário Atual">
+      
+      {/* Área de Filtros Duplos */}
+      <div className="secao-filtros">
+        <div className="input-busca-wrapper">
+          <MdSearch size={20} className="icone-busca" />
+          <input 
+            type="text" 
+            placeholder="Filtrar por Lote..." 
+            value={buscaLote}
+            onChange={(e) => setBuscaLote(e.target.value)}
           />
-        </p>
+        </div>
 
-        <p><b>Validade:</b> {p.dataValidade || "-"}</p>
-        <p><b>Posição:</b> {p.posicao}</p>
+        <div className="input-busca-wrapper">
+          <MdFilterList size={20} className="icone-busca" />
+          <input 
+            type="number" 
+            placeholder="Quantidade..." 
+            value={buscaQtd}
+            onChange={(e) => setBuscaQtd(e.target.value)}
+          />
+        </div>
       </div>
 
-      <div className="card-footer">
-        <button
-          className="btn-excluir"
-          onClick={() => excluir(p.id)}
-        >
-          Excluir
-        </button>
+      <div className="grid-produtos">
+        {produtosFiltrados.length === 0 && (
+          <p className="msg-vazio">Nenhum palete corresponde aos filtros aplicados.</p>
+        )}
+        
+        {produtosFiltrados.map((p) => (
+          <div className="card-item-agro" key={p.id}>
+            <div className="card-header">
+              <span className="lote-tag">{p.lote}</span>
+              <span className="posicao-tag">{p.posicao}</span>
+            </div>
+            
+            <h3>{p.descricaoProduto}</h3>
+            <p className="validade">Vence em: {p.dataValidade}</p>
+
+            <div className="card-acoes">
+              <div className="campo-qtd-direta">
+                <span>Qtd:</span>
+                <input 
+                  type="number" 
+                  value={p.quantidadePorPalete} 
+                  onChange={(e) => mudarQtd(p.id, e.target.value)}
+                />
+              </div>
+
+              <div className="botoes-grupo">
+                <button className="btn-edit" onClick={() => navigate(`/cadastro-produtos/${p.id}`)}>
+                  <MdEdit size={20} />
+                </button>
+                <button className="btn-del" onClick={() => excluir(p.id)}>
+                  <MdDelete size={20} />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-    </div>
-  ))}
-</div>
 
-      {/* ➕ BOTÃO ADICIONAR */}
-      <MdAddCircle
-        className="botao-adicionar"
-        size={64}
-        color="#22c55e"
-        onClick={() => navigate("/cadastro-produtos")}
-        title="Cadastrar novo palete"
-      />
-
+      <button className="btn-flutuante" onClick={() => navigate("/cadastro-produtos?origem=lista")}>
+        <MdAddCircle size={60} />
+      </button>
     </Principal>
   );
 }
