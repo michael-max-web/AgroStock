@@ -37,7 +37,6 @@ function App() {
       <Cabecalho /> {/* Este é o único cabeçalho do topo */}
       <RouterProvider router={roteador} />
       <ToastContainer position="top-center" autoClose={2000} />
-      <Rodape/>
     </>
   );
 }
