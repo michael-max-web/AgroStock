@@ -63,23 +63,23 @@ function ListaProdutos() {
     <Principal voltarPara="/" titulo="Controle de Paletes">
 
       {/* 🔍 BUSCAS */}
-      <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-        <input
-          type="text"
-          placeholder="Buscar por lote..."
-          className="input-busca"
-          value={buscaLote}
-          onChange={(e) => setBuscaLote(e.target.value)}
-        />
+      <div className="busca-container">
+  <input
+    type="text"
+    placeholder="Buscar por lote..."
+    className="input-busca"
+    value={buscaLote}
+    onChange={(e) => setBuscaLote(e.target.value)}
+  />
 
-        <input
-          type="number"
-          placeholder="Buscar por quantidade..."
-          className="input-busca"
-          value={buscaQuantidade}
-          onChange={(e) => setBuscaQuantidade(e.target.value)}
-        />
-      </div>
+  <input
+    type="number"
+    placeholder="Buscar por quantidade..."
+    className="input-busca"
+    value={buscaQuantidade}
+    onChange={(e) => setBuscaQuantidade(e.target.value)}
+  />
+</div>
 
  <div className="container-tabela">
   <table className="tabela">

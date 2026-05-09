@@ -13,6 +13,8 @@
   gap: 12px;
 
   margin-bottom: 26px;
+
+  flex-wrap: wrap;
 }
 
 .principal__titulo h2 {
@@ -20,6 +22,8 @@
   font-weight: 700;
 
   color: var(--cor-texto);
+
+  word-break: break-word;
 }
 
 .principal__titulo svg {
@@ -28,6 +32,8 @@
   color: var(--cor-texto-secundario);
 
   transition: 0.2s ease;
+
+  min-width: 24px;
 }
 
 .principal__titulo svg:hover {
@@ -37,10 +43,15 @@
 
 @media (max-width: 768px) {
   .principal__root {
-    padding: 22px 14px 120px;
+    padding: 22px 14px 100px;
+  }
+
+  .principal__titulo {
+    align-items: flex-start;
   }
 
   .principal__titulo h2 {
     font-size: 24px;
+    line-height: 1.2;
   }
 }

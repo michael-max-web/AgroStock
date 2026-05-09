@@ -1,43 +1,61 @@
 .container-tabela {
-  margin: 20px;
+  margin-top: 20px;
+
   background: var(--cor-card);
+
   border-radius: var(--radius);
+
   padding: 20px;
+
   border: 1px solid var(--cor-borda);
+
+  overflow-x: auto;
 }
 
-/* busca */
 .busca-container {
   display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 12px;
+
+  margin-top: 12px;
+  margin-bottom: 18px;
 }
 
 .input-busca {
-  margin: 15px;
   flex: 1;
-  padding: 10px;
-  border-radius: 8px;
+
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
   border: 1px solid var(--cor-borda);
+
   background: #fafafa;
 }
 
-/* tabela */
 .tabela {
   width: 100%;
+  min-width: 700px;
+
   border-collapse: collapse;
 }
 
 .tabela th {
   font-size: 12px;
+
   text-transform: uppercase;
+
   color: var(--cor-texto-secundario);
+
   padding: 10px;
+
   text-align: left;
 }
 
 .tabela td {
   padding: 12px 10px;
+
   border-top: 1px solid var(--cor-borda);
 }
 
@@ -45,33 +63,47 @@
   background: #f9fafb;
 }
 
-/* input */
 .input-qtd {
-  width: 60px;
-  padding: 5px;
-  border-radius: 6px;
+  width: 70px;
+
+  padding: 6px;
+
+  border-radius: 8px;
+
   border: 1px solid var(--cor-borda);
 }
 
-/* botão excluir */
 .btn-excluir {
   background: transparent;
+
   border: none;
+
   color: var(--cor-erro);
+
   cursor: pointer;
+
+  font-weight: 600;
 }
 
-/* botão adicionar */
 .botao-adicionar {
   position: fixed;
+
   bottom: 24px;
   right: 24px;
+
   background: var(--cor-primaria);
+
   color: white;
+
   border-radius: 50%;
+
   padding: 14px;
+
   box-shadow: var(--shadow);
+
   cursor: pointer;
+
+  z-index: 999;
 }
 
 .botao-adicionar:hover {
@@ -84,24 +116,42 @@
 
 .card {
   background: var(--cor-card);
-  border-radius: var(--radius);
-  padding: 14px;
-  margin-bottom: 10px;
+
+  border-radius: 20px;
+
+  padding: 18px;
+
+  margin-top: 16px;
+
   border: 1px solid var(--cor-borda);
+
+  box-shadow: var(--shadow);
 }
 
 .card-header {
-  font-weight: 600;
-  margin-bottom: 6px;
+  font-size: 18px;
+  font-weight: 700;
+
+  margin-bottom: 12px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .card-body p {
   font-size: 14px;
+
   color: var(--cor-texto-secundario);
+
+  word-break: break-word;
 }
 
 .card-footer {
-  margin-top: 8px;
+  margin-top: 14px;
+
   text-align: right;
 }
 
@@ -116,5 +166,16 @@
 
   .busca-container {
     flex-direction: column;
+  }
+
+  .input-busca {
+    margin: 0;
+  }
+
+  .botao-adicionar {
+    width: 64px;
+    height: 64px;
+
+    padding: 12px;
   }
 }
