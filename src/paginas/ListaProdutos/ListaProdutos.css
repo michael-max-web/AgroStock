@@ -143,11 +143,11 @@
 }
 
 .card-item-agro h3 {
-  font-size: 19px;
+  font-size: 17px;
 
   line-height: 1.3;
 
-  color: #2f3b33;
+  color: #38453b;
 
   margin-bottom: 10px;
 
@@ -210,6 +210,9 @@
   color: #347937;
 
   outline: none;
+
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .botoes-grupo {
@@ -258,10 +261,24 @@
 .btn-edit:focus,
 .btn-del:focus,
 .btn-edit:focus-visible,
-.btn-del:focus-visible {
+.btn-del:focus-visible,
+.btn-edit:visited,
+.btn-del:visited {
   outline: none !important;
 
   box-shadow: none !important;
+
+  background-image: none !important;
+}
+
+.btn-edit::-moz-focus-inner,
+.btn-del::-moz-focus-inner {
+  border: 0;
+}
+
+.btn-edit svg,
+.btn-del svg {
+  pointer-events: none;
 }
 
 .btn-edit:active,
@@ -384,6 +401,24 @@
   backdrop-filter: blur(16px);
 
   color: rgba(255,255,255,0.85);
+}
+
+@media (hover: none) {
+  .btn-edit:hover {
+    background: rgba(61,140,64,0.10);
+
+    color: #347937;
+  }
+
+  .btn-del:hover {
+    background: rgba(239,68,68,0.10);
+
+    color: #ef4444;
+  }
+
+  .btn-flutuante:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 640px) {
