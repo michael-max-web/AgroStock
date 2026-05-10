@@ -5,22 +5,24 @@
   --cor-secundaria: #d4a24c;
   --cor-secundaria-hover: #b88634;
 
-  --cor-fundo: #f3f6f4;
-  --cor-card: #ffffff;
+  --cor-fundo: #f4f7f5;
+  --cor-card: rgba(255, 255, 255, 0.9);
 
-  --cor-texto: #1e293b;
+  --cor-texto: #0f172a;
   --cor-texto-secundario: #64748b;
 
-  --cor-borda: #dbe3dd;
+  --cor-borda: #dbe4de;
 
   --cor-sucesso: #16a34a;
   --cor-erro: #dc2626;
 
-  --radius: 18px;
+  --radius: 24px;
 
   --shadow:
-    0 4px 10px rgba(15, 23, 42, 0.04),
-    0 10px 30px rgba(15, 23, 42, 0.06);
+    0 4px 12px rgba(15, 23, 42, 0.04),
+    0 12px 40px rgba(15, 23, 42, 0.08);
+
+  --blur: blur(18px);
 }
 
 * {
@@ -34,25 +36,26 @@ body,
 #root {
   min-height: 100vh;
   width: 100%;
+}
 
+html {
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
+  overflow-x: hidden;
   font-family: "Inter", sans-serif;
+  color: var(--cor-texto);
 
   background:
-    radial-gradient(circle at top left, #e9f4ef 0%, transparent 35%),
-    radial-gradient(circle at bottom right, #f8f1df 0%, transparent 35%),
-    var(--cor-fundo);
-
-  color: var(--cor-texto);
+    radial-gradient(circle at top left, #dff3ea 0%, transparent 30%),
+    radial-gradient(circle at bottom right, #f8f0d8 0%, transparent 30%),
+    linear-gradient(180deg, #f8fafc 0%, #eef4f1 100%);
 }
 
 img {
   max-width: 100%;
-  height: auto;
-
   display: block;
 }
 
@@ -63,9 +66,15 @@ textarea {
   font: inherit;
 }
 
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
 button {
-  cursor: pointer;
   border: none;
+  cursor: pointer;
 }
 
 a {

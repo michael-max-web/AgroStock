@@ -1,73 +1,100 @@
 .pagina-inicial {
-  min-height: 100vh;
-  width: 100%;
+  min-height: calc(100vh - 72px);
+
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 20px;
-  /* Background com overlay para destacar o card */
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("https://blog.syngentadigital.ag/wp-content/uploads/2017/09/mao-pegando-graos-de-soja-1600x900.jpg");
-  background-size: cover;
-  background-position: center;
+  justify-content: center;
+
+  padding: 24px;
 }
 
 .pagina-inicial__card {
   width: 100%;
-  max-width: 450px;
-  background: var(--cor-card);
-  padding: 40px;
-  border-radius: var(--radius);
+  max-width: 520px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+
+  border-radius: 32px;
+
+  padding: clamp(28px, 5vw, 48px);
+
   box-shadow: var(--shadow);
-  text-align: center;
-  backdrop-filter: blur(8px); /* Efeito de vidro suave */
 }
 
 .pagina-inicial__card h1 {
-  font-size: 28px;
+  font-size: clamp(28px, 6vw, 42px);
+  line-height: 1.1;
+
+  text-align: center;
+
+  margin-bottom: 32px;
+
   color: var(--cor-texto);
-  margin: 20px 0 30px;
-  line-height: 1.2;
 }
 
 .pagina-inicial__botoes {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .botao-home {
   width: 100%;
-  padding: 16px;
-  font-size: 16px;
+
+  padding: 18px;
+
+  border-radius: 20px;
+
+  font-size: 15px;
   font-weight: 700;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+
+  transition: 0.25s ease;
+
+  letter-spacing: 0.4px;
+}
+
+.botao-home:hover {
+  transform: translateY(-2px);
+}
+
+.botao-home:active {
+  transform: scale(0.98);
 }
 
 .botao-home.primario {
-  background-color: var(--cor-primaria);
-  color: white;
-}
+  background: linear-gradient(
+    135deg,
+    var(--cor-primaria),
+    #2c8d78
+  );
 
-.botao-home.primario:hover {
-  background-color: var(--cor-primaria-hover);
-  transform: translateY(-2px);
+  color: white;
 }
 
 .botao-home.secundario {
-  background-color: var(--cor-secundaria);
+  background: linear-gradient(
+    135deg,
+    var(--cor-secundaria),
+    #d9b065
+  );
+
   color: white;
 }
 
-.botao-home.secundario:hover {
-  background-color: var(--cor-secundaria-hover);
-  transform: translateY(-2px);
-}
-
 @media (max-width: 480px) {
-  .pagina-inicial__card { padding: 30px 20px; }
-  .pagina-inicial__card h1 { font-size: 22px; }
+  .pagina-inicial {
+    padding: 16px;
+  }
+
+  .pagina-inicial__card {
+    border-radius: 28px;
+  }
+
+  .pagina-inicial__card h1 {
+    font-size: 30px;
+  }
 }
