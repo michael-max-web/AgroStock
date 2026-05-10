@@ -1,71 +1,130 @@
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
+
 .container-principal {
+  flex: 1;
+
   width: 100%;
-  max-width: 1250px;
+  max-width: 1200px;
 
   margin: 0 auto;
 
   padding:
-    clamp(20px, 4vw, 40px)
-    clamp(16px, 4vw, 32px)
+    34px
+    22px
     120px;
+
+  box-sizing: border-box;
 }
 
 .topo-pagina {
   display: flex;
   align-items: center;
-  gap: 16px;
 
-  margin-bottom: 32px;
+  gap: 14px;
+
+  margin-bottom: 34px;
 }
 
 .topo-pagina h1 {
-  font-size: clamp(24px, 4vw, 38px);
+  font-size: clamp(26px, 4vw, 34px);
+
   font-weight: 800;
-  line-height: 1.1;
-  color: var(--cor-texto);
+
+  line-height: 1;
+
+  letter-spacing: -1px;
+
+  color: white;
+
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 44px;
 }
 
 .btn-voltar {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
 
-  border-radius: 16px;
+  min-width: 44px;
+
+  border: none;
+
+  background: transparent;
+
+  color: rgba(255,255,255,0.92);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: rgba(255, 255, 255, 0.85);
+  padding: 0;
 
-  border: 1px solid var(--cor-borda);
+  margin: 0;
 
-  color: var(--cor-primaria);
+  border-radius: 50%;
 
-  transition: 0.2s ease;
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+
+  cursor: pointer;
+
+  outline: none;
+
+  -webkit-appearance: none;
+
+  appearance: none;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-voltar:hover {
-  background: var(--cor-primaria);
-  color: white;
-  transform: translateY(-2px);
+  opacity: 0.75;
 }
 
-.conteudo-pagina {
-  width: 100%;
+.btn-voltar:active {
+  transform: scale(0.90);
+}
+
+.btn-voltar:focus,
+.btn-voltar:focus-visible {
+  outline: none;
+
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {
   .container-principal {
-    padding: 20px 16px 120px;
+    padding:
+      24px
+      16px
+      120px;
   }
 
   .topo-pagina {
-    align-items: flex-start;
+    gap: 10px;
+
+    margin-bottom: 26px;
+  }
+
+  .topo-pagina h1 {
+    font-size: 24px;
+
+    min-height: 40px;
   }
 
   .btn-voltar {
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
   }
 }

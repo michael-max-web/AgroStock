@@ -94,3 +94,15 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
