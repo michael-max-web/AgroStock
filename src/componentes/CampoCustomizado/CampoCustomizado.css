@@ -1,28 +1,63 @@
 .campo-customizado__root {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+
   width: 100%;
 }
 
 .campo-customizado__root span {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
-  color: #4a5568;
+
+  color: #d7e3dc;
 }
 
 .campo-customizado__input {
   width: 100%;
-  padding: 12px 15px;
-  border-radius: 10px;
-  border: 1.5px solid #e2e8f0;
-  font-size: 16px; /* Evita zoom automático no iPhone */
-  box-sizing: border-box;
-  transition: 0.2s;
+
+  min-height: 58px;
+
+  padding: 16px 18px;
+
+  border-radius: 18px;
+
+  border: 1.5px solid rgba(255,255,255,0.06);
+
+  background: rgba(255,255,255,0.03);
+
+  color: white;
+
+  font-size: 16px;
+
+  transition: 0.2s ease;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.03);
+}
+
+.campo-customizado__input::placeholder {
+  color: #8ea39a;
 }
 
 .campo-customizado__input:focus {
   outline: none;
-  border-color: #1f6f5f;
-  box-shadow: 0 0 0 3px rgba(31, 111, 95, 0.1);
+
+  border-color: #3ca36f;
+
+  box-shadow:
+    0 0 0 4px rgba(60, 163, 111, 0.12);
+}
+
+input[type="date"].campo-customizado__input {
+  overflow: hidden;
+}
+
+.campo-customizado__obrigatorio {
+  color: #ef4444;
 }

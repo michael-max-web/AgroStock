@@ -1,28 +1,38 @@
 :root {
-  --cor-primaria: #1f6f5f;
-  --cor-primaria-hover: #195548;
+  --cor-primaria: #2f7d57;
+  --cor-primaria-hover: #27684a;
 
-  --cor-secundaria: #d4a24c;
-  --cor-secundaria-hover: #b88634;
+  --cor-secundaria: #c59a47;
+  --cor-secundaria-hover: #a8833c;
 
-  --cor-fundo: #f4f7f5;
-  --cor-card: rgba(255, 255, 255, 0.9);
+  --cor-fundo: #0f1c17;
 
-  --cor-texto: #0f172a;
-  --cor-texto-secundario: #64748b;
+  --cor-surface: rgba(21, 35, 29, 0.82);
 
-  --cor-borda: #dbe4de;
+  --cor-card: rgba(24, 39, 32, 0.88);
 
-  --cor-sucesso: #16a34a;
-  --cor-erro: #dc2626;
+  --cor-texto: #f4f7f5;
+
+  --cor-texto-secundario: #b6c4bc;
+
+  --cor-borda: rgba(255, 255, 255, 0.06);
+
+  --cor-sucesso: #4ade80;
+
+  --cor-erro: #ef4444;
 
   --radius: 24px;
 
   --shadow:
-    0 4px 12px rgba(15, 23, 42, 0.04),
-    0 12px 40px rgba(15, 23, 42, 0.08);
+    0 10px 40px rgba(0, 0, 0, 0.28),
+    0 4px 18px rgba(0, 0, 0, 0.18);
 
-  --blur: blur(18px);
+  --glass:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.04),
+      rgba(255,255,255,0.02)
+    );
 }
 
 * {
@@ -45,13 +55,22 @@ html {
 
 body {
   overflow-x: hidden;
+
   font-family: "Inter", sans-serif;
+
   color: var(--cor-texto);
 
   background:
-    radial-gradient(circle at top left, #dff3ea 0%, transparent 30%),
-    radial-gradient(circle at bottom right, #f8f0d8 0%, transparent 30%),
-    linear-gradient(180deg, #f8fafc 0%, #eef4f1 100%);
+    radial-gradient(circle at top left, rgba(47, 125, 87, 0.18) 0%, transparent 28%),
+    radial-gradient(circle at bottom right, rgba(197, 154, 71, 0.16) 0%, transparent 28%),
+    linear-gradient(
+      180deg,
+      #13211b 0%,
+      #0f1c17 45%,
+      #0b1511 100%
+    );
+
+  background-attachment: fixed;
 }
 
 img {
