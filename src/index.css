@@ -1,38 +1,31 @@
 :root {
-  --cor-primaria: #2f7d57;
-  --cor-primaria-hover: #27684a;
+  --cor-primaria: #3d8c40;
+  --cor-primaria-hover: #2f7032;
 
-  --cor-secundaria: #c59a47;
-  --cor-secundaria-hover: #a8833c;
+  --cor-secundaria: #d88a1c;
+  --cor-secundaria-hover: #bb7411;
 
-  --cor-fundo: #0f1c17;
+  --cor-fundo: #243127;
 
-  --cor-surface: rgba(21, 35, 29, 0.82);
+  --cor-surface: rgba(255,255,255,0.08);
 
-  --cor-card: rgba(24, 39, 32, 0.88);
+  --cor-card: rgba(255,255,255,0.90);
 
-  --cor-texto: #f4f7f5;
+  --cor-texto: #1c261f;
 
-  --cor-texto-secundario: #b6c4bc;
+  --cor-texto-secundario: #5f6d62;
 
-  --cor-borda: rgba(255, 255, 255, 0.06);
+  --cor-borda: rgba(255,255,255,0.08);
 
-  --cor-sucesso: #4ade80;
+  --cor-sucesso: #22c55e;
 
   --cor-erro: #ef4444;
 
   --radius: 24px;
 
   --shadow:
-    0 10px 40px rgba(0, 0, 0, 0.28),
-    0 4px 18px rgba(0, 0, 0, 0.18);
-
-  --glass:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.04),
-      rgba(255,255,255,0.02)
-    );
+    0 12px 40px rgba(0,0,0,0.16),
+    0 4px 12px rgba(0,0,0,0.08);
 }
 
 * {
@@ -44,12 +37,13 @@
 html,
 body,
 #root {
-  min-height: 100vh;
   width: 100%;
+  min-height: 100vh;
 }
 
 html {
   overflow-x: hidden;
+
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -58,19 +52,19 @@ body {
 
   font-family: "Inter", sans-serif;
 
-  color: var(--cor-texto);
-
   background:
-    radial-gradient(circle at top left, rgba(47, 125, 87, 0.18) 0%, transparent 28%),
-    radial-gradient(circle at bottom right, rgba(197, 154, 71, 0.16) 0%, transparent 28%),
+    radial-gradient(circle at top left, rgba(101,183,65,0.22) 0%, transparent 24%),
+    radial-gradient(circle at bottom right, rgba(216,138,28,0.16) 0%, transparent 22%),
     linear-gradient(
       180deg,
-      #13211b 0%,
-      #0f1c17 45%,
-      #0b1511 100%
+      #34463a 0%,
+      #243127 40%,
+      #1c261f 100%
     );
 
   background-attachment: fixed;
+
+  color: white;
 }
 
 img {
