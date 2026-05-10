@@ -143,7 +143,7 @@ function CadastroProduto() {
     <Principal
       titulo={
         id
-          ? "Editar Localização"
+          ? "Editar Informações "
           : "Cadastro de Palete"
       }
       voltarPara={destinoVoltar}
