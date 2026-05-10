@@ -1,6 +1,7 @@
 .campo-customizado__root {
   display: flex;
   flex-direction: column;
+
   gap: 8px;
 
   width: 100%;
@@ -10,48 +11,68 @@
   font-size: 15px;
   font-weight: 700;
 
-  color: rgba(255,255,255,0.82);
+  color: rgba(255,255,255,0.88);
+}
+
+.campo-customizado__obrigatorio {
+  color: #ef4444;
 }
 
 .campo-customizado__input {
   width: 100%;
 
-  min-height: 58px;
+  min-height: 56px;
 
-  padding: 16px 18px;
+  padding: 14px 16px;
 
   border-radius: 18px;
 
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.10);
 
-  background: rgba(255,255,255,0.08);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.14),
+      rgba(255,255,255,0.08)
+    );
 
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(12px);
 
   color: white;
 
   font-size: 16px;
 
-  transition: 0.2s ease;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+
+  appearance: none;
+
+  -webkit-appearance: none;
 }
 
 .campo-customizado__input::placeholder {
-  color: rgba(255,255,255,0.42);
+  color: rgba(255,255,255,0.45);
 }
 
 .campo-customizado__input:focus {
-  outline: none;
-
-  border-color: #58b287;
+  border-color: rgba(101,183,65,0.45);
 
   box-shadow:
-    0 0 0 4px rgba(88, 178, 135, 0.14);
+    0 0 0 4px rgba(101,183,65,0.12);
 }
 
-input[type="date"].campo-customizado__input {
-  overflow: hidden;
+.campo-customizado__input[type="date"] {
+  color-scheme: dark;
 }
 
-.campo-customizado__obrigatorio {
-  color: #ef4444;
+.campo-customizado__input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+
+  opacity: 0.8;
+
+  cursor: pointer;
 }
