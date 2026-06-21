@@ -166,7 +166,7 @@ function ListaProdutos() {
       <div className="grid-produtos">
         {produtosFiltrados.length === 0 && (
           <p className="msg-vazio">
-            Nenhum palete corresponde aos filtros aplicados.
+            Nenhum palete encontrado.
           </p>
         )}
 

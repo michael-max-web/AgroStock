@@ -29,7 +29,7 @@
 }
 
 .novo-usuario__select-wrapper::after {
-  content: "▼";
+  content: "⌵";
 
   position: absolute;
   right: 18px;

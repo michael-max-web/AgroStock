@@ -223,3 +223,28 @@
     width: 100%;
   }
 }
+
+.input-busca-wrapper {
+  position: relative;
+}
+
+.input-busca-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+.input-busca-wrapper:has(select)::after {
+  content: "⌵";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.72);
+  pointer-events: none;
+  font-size: 12px;
+font-weight: 400;
+  
+}

@@ -99,7 +99,7 @@
 }
 
 .cadastro-produto__select-wrapper::after {
-  content: "▼";
+  content: "⌵";
 
   position: absolute;
   right: 18px;
