@@ -76,3 +76,18 @@
 
   cursor: pointer;
 }
+
+.campo-customizado__input:-webkit-autofill,
+.campo-customizado__input:-webkit-autofill:hover,
+.campo-customizado__input:-webkit-autofill:focus,
+.campo-customizado__input:-webkit-autofill:active {
+  -webkit-text-fill-color: white !important;
+  caret-color: white !important;
+
+  -webkit-box-shadow: 0 0 0 1000px #35463a inset !important;
+  box-shadow: 0 0 0 1000px #35463a inset !important;
+
+  border: 1px solid rgba(101, 183, 65, 0.45) !important;
+
+  transition: background-color 999999s ease-in-out 0s !important;
+}

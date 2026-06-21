@@ -5,52 +5,67 @@ import { toast } from "react-toastify";
 import Principal from "../../componentes/Principal/Principal";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 
+import { useAppContext } from "../../contexto/AppContext";
+import { setores } from "../../servicos/setores";
+
 import validarPosicao from "../../utils/validarPosicao";
 
 import "./CadastroProduto.css";
 
 function CadastroProduto() {
   const navigate = useNavigate();
-
   const { id } = useParams();
-
   const location = useLocation();
+
+  const { usuarioLogado } = useAppContext();
 
   const [form, setForm] = useState({
     lote: "",
     descricaoProduto: "",
     quantidadePorPalete: "",
     dataValidade: "",
-    posicao: ""
+    posicao: "",
+    setor: "",
   });
 
   const queryParams = new URLSearchParams(location.search);
+  const veioDaLista = queryParams.get("origem") === "lista";
 
-  const veioDaLista =
-    queryParams.get("origem") === "lista";
+  const usuarioAdministrador = usuarioLogado?.perfil === "administrador";
 
   useEffect(() => {
     if (id) {
-      const produtos =
-        JSON.parse(localStorage.getItem("produtos")) || [];
+      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      const produtoParaEditar = produtos.find((p) => p.id === id);
 
-      const produtoParaEditar =
-        produtos.find((p) => p.id === id);
-
-      if (produtoParaEditar) {
-        setForm(produtoParaEditar);
+      if (!produtoParaEditar) {
+        toast.error("Produto não encontrado!");
+        navigate("/lista-produtos");
+        return;
       }
+
+      if (
+        usuarioLogado?.perfil !== "administrador" &&
+        produtoParaEditar.setor !== usuarioLogado?.setor
+      ) {
+        toast.error("Você não tem permissão para editar este produto.");
+        navigate("/lista-produtos");
+        return;
+      }
+
+      setForm(produtoParaEditar);
     }
-  }, [id]);
+  }, [id, navigate, usuarioLogado]);
 
   const validarLote = (lote) => {
     const regexLote = /^[A-Z]{3}\d{7}$/;
-
     return regexLote.test(lote);
   };
 
   const salvar = (e) => {
     e.preventDefault();
+
+    const setorProduto = usuarioAdministrador ? form.setor : usuarioLogado?.setor;
 
     if (
       !form.lote ||
@@ -59,9 +74,11 @@ function CadastroProduto() {
       !form.dataValidade ||
       !form.posicao
     ) {
-      return toast.warning(
-        "Todos os campos devem ser preenchidos!"
-      );
+      return toast.warning("Todos os campos devem ser preenchidos!");
+    }
+
+    if (usuarioAdministrador && !form.setor) {
+      return toast.warning("Selecione o setor/fazenda do produto!");
     }
 
     if (!validarLote(form.lote)) {
@@ -69,89 +86,99 @@ function CadastroProduto() {
     }
 
     if (!validarPosicao(form.posicao)) {
-      return toast.error(
-        "Posição inválida!"
-      );
+      return toast.error("Posição inválida!");
     }
 
     const dataHoje = new Date();
-
     dataHoje.setHours(0, 0, 0, 0);
 
     const dataInserida = new Date(form.dataValidade);
-
     dataInserida.setHours(24, 0, 0, 0);
 
     if (dataInserida < dataHoje) {
-      return toast.error(
-        "Data de validade vencida!"
-      );
+      return toast.error("Data de validade vencida!");
     }
 
-    const produtos =
-      JSON.parse(localStorage.getItem("produtos")) || [];
+    const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
 
     const posicaoOcupada = produtos.find(
       (p) =>
-        p.posicao.trim().toUpperCase() ===
-          form.posicao.trim().toUpperCase() &&
+        p.posicao.trim().toUpperCase() === form.posicao.trim().toUpperCase() &&
+        p.setor === setorProduto &&
         p.id !== id
     );
 
     if (posicaoOcupada) {
       return toast.error(
-        `A posição ${form.posicao} já está ocupada!`
+        `A posição ${form.posicao} já está ocupada em ${setorProduto}!`
       );
     }
 
     if (id) {
       const listaAtualizada = produtos.map((p) =>
-        p.id === id ? { ...form } : p
+        p.id === id
+          ? {
+              ...form,
+              setor: setorProduto,
+              usuarioId: form.usuarioId || usuarioLogado.id,
+            }
+          : p
       );
 
-      localStorage.setItem(
-        "produtos",
-        JSON.stringify(listaAtualizada)
-      );
-
+      localStorage.setItem("produtos", JSON.stringify(listaAtualizada));
       toast.success("Atualizado com sucesso!");
     } else {
       const novo = {
         ...form,
-        id: crypto.randomUUID()
+        id: crypto.randomUUID(),
+        usuarioId: usuarioLogado.id,
+        setor: setorProduto,
       };
 
       produtos.push(novo);
 
-      localStorage.setItem(
-        "produtos",
-        JSON.stringify(produtos)
-      );
-
+      localStorage.setItem("produtos", JSON.stringify(produtos));
       toast.success("Palete alocado com sucesso!");
     }
 
     navigate("/lista-produtos");
   };
 
-  const destinoVoltar =
-    id || veioDaLista
-      ? "/lista-produtos"
-      : "/";
+  const destinoVoltar = id || veioDaLista ? "/lista-produtos" : "/";
 
   return (
     <Principal
-      titulo={
-        id
-          ? "Editar Informações "
-          : "Cadastro de Palete"
-      }
+      titulo={id ? "Editar Informações" : "Cadastro de Palete"}
       voltarPara={destinoVoltar}
     >
-      <form
-        className="formulario-container"
-        onSubmit={salvar}
-      >
+      <form className="formulario-container" onSubmit={salvar}>
+        {usuarioAdministrador && (
+          <div className="cadastro-produto__grupo-select">
+            <label>Setor/Fazenda</label>
+
+            <div className="cadastro-produto__select-wrapper">
+              <select
+                className="cadastro-produto__select"
+                value={form.setor}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    setor: e.target.value,
+                  })
+                }
+              >
+                <option value="">Selecione um setor</option>
+
+                {setores.map((setor) => (
+                  <option key={setor} value={setor}>
+                    {setor}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        )}
+
         <CampoCustomizado
           label="Lote"
           placeholder="Ex.: SOJ0000000"
@@ -159,9 +186,7 @@ function CadastroProduto() {
           onChange={(e) =>
             setForm({
               ...form,
-              lote: e.target.value
-                .toUpperCase()
-                .trim()
+              lote: e.target.value.toUpperCase().trim(),
             })
           }
         />
@@ -173,9 +198,7 @@ function CadastroProduto() {
           onChange={(e) =>
             setForm({
               ...form,
-              posicao: e.target.value
-                .toUpperCase()
-                .trim()
+              posicao: e.target.value.toUpperCase().trim(),
             })
           }
         />
@@ -188,7 +211,7 @@ function CadastroProduto() {
             onChange={(e) =>
               setForm({
                 ...form,
-                descricaoProduto: e.target.value
+                descricaoProduto: e.target.value,
               })
             }
           />
@@ -202,7 +225,7 @@ function CadastroProduto() {
           onChange={(e) =>
             setForm({
               ...form,
-              quantidadePorPalete: e.target.value
+              quantidadePorPalete: e.target.value,
             })
           }
         />
@@ -214,22 +237,17 @@ function CadastroProduto() {
           onChange={(e) =>
             setForm({
               ...form,
-              dataValidade: e.target.value
+              dataValidade: e.target.value,
             })
           }
         />
 
-        <button
-          type="submit"
-          className="btn-finalizar"
-        >
-          {id
-            ? "Salvar Alterações"
-            : "Confirmar Alocação"}
+        <button type="submit" className="btn-finalizar">
+          {id ? "Salvar Alterações" : "Confirmar Alocação"}
         </button>
       </form>
     </Principal>
   );
 }
 
-export default CadastroProduto; 
+export default CadastroProduto;

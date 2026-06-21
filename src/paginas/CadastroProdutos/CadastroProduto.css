@@ -2,9 +2,7 @@
   width: 100%;
 
   display: grid;
-
   grid-template-columns: 1fr;
-
   gap: 22px;
 
   padding: 28px;
@@ -32,11 +30,11 @@
 
 .btn-finalizar {
   width: 100%;
-
   min-height: 60px;
 
   margin-top: 10px;
 
+  border: none;
   border-radius: 18px;
 
   background:
@@ -52,6 +50,8 @@
   font-weight: 800;
 
   letter-spacing: 0.3px;
+
+  cursor: pointer;
 
   transition:
     transform 0.2s ease,
@@ -78,9 +78,86 @@
     0 0 0 4px rgba(101, 183, 65, 0.14);
 }
 
+.cadastro-produto__grupo-select {
+  width: 100%;
+}
+
+.cadastro-produto__grupo-select label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: rgba(255,255,255,0.88);
+}
+
+.cadastro-produto__select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.cadastro-produto__select-wrapper::after {
+  content: "▼";
+
+  position: absolute;
+  right: 18px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  font-size: 12px;
+  color: rgba(255,255,255,0.75);
+
+  pointer-events: none;
+}
+
+.cadastro-produto__select {
+  width: 100%;
+  min-height: 56px;
+
+  padding: 14px 46px 14px 16px;
+
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.14),
+      rgba(255,255,255,0.08)
+    );
+
+  color: white;
+  font-size: 16px;
+
+  outline: none;
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.cadastro-produto__select option {
+  background-color: #26352c;
+  color: white;
+}
+
+.cadastro-produto__select:focus {
+  border-color: rgba(101,183,65,0.45);
+
+  box-shadow:
+    0 0 0 4px rgba(101,183,65,0.12);
+}
+
 @media (min-width: 768px) {
   .formulario-container {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cadastro-produto__grupo-select {
+    grid-column: span 2;
   }
 
   .campo-descricao {
@@ -89,9 +166,7 @@
 
   .btn-finalizar {
     grid-column: span 2;
-
     max-width: 380px;
-
     justify-self: center;
   }
 }
