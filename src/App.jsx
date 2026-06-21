@@ -1,9 +1,11 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
 
+import Cabecalho from "./componentes/Cabecalho/Cabecalho";
+import ValidarAutenticacao from "./componentes/ValidarAutenticacao/ValidarAutenticacao";
 import AppContextProvider from "./contexto/AppContext";
 
 import PaginaInicial from "./paginas/PaginaInicial/PaginaInicial";
@@ -13,62 +15,70 @@ import Login from "./paginas/Login/Login";
 import NovoUsuario from "./paginas/NovoUsuario/NovoUsuario";
 import PerfilUsuario from "./paginas/PerfilUsuario/PerfilUsuario";
 
-import Cabecalho from "./componentes/Cabecalho/Cabecalho";
-import ValidarAutenticacao from "./componentes/ValidarAutenticacao/ValidarAutenticacao";
+function Layout() {
+  return (
+    <div className="app-layout">
+      <Cabecalho />
+
+      <main className="app-conteudo">
+        <Outlet />
+      </main>
+
+      <ToastContainer position="top-center" autoClose={2000} theme="colored" />
+    </div>
+  );
+}
 
 const roteador = createBrowserRouter([
   {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "novo-usuario",
-    element: <NovoUsuario />,
-  },
-  {
-    path: "",
-    element: <ValidarAutenticacao />,
+    path: "/",
+    element: <Layout />,
     children: [
       {
-        path: "",
-        element: <PaginaInicial />,
+        path: "login",
+        element: <Login />,
       },
       {
-        path: "meu-perfil",
-        element: <PerfilUsuario />,
+        path: "novo-usuario",
+        element: <NovoUsuario />,
       },
       {
-        path: "lista-produtos",
-        element: <ListaProdutos />,
+        element: <ValidarAutenticacao />,
+        children: [
+          {
+            index: true,
+            element: <PaginaInicial />,
+          },
+          {
+            path: "meu-perfil",
+            element: <PerfilUsuario />,
+          },
+          {
+            path: "lista-produtos",
+            element: <ListaProdutos />,
+          },
+          {
+            path: "cadastro-produtos",
+            element: <CadastroProduto />,
+          },
+          {
+            path: "cadastro-produtos/:id",
+            element: <CadastroProduto />,
+          },
+        ],
       },
       {
-        path: "cadastro-produtos",
-        element: <CadastroProduto />,
-      },
-      {
-        path: "cadastro-produtos/:id",
-        element: <CadastroProduto />,
+        path: "*",
+        element: <h3>Página não encontrada!</h3>,
       },
     ],
-  },
-  {
-    path: "*",
-    element: <h3>Página não encontrada!</h3>,
   },
 ]);
 
 function App() {
   return (
     <AppContextProvider>
-      <div className="app-layout">
-        <Cabecalho />
-
-        <div className="app-conteudo">
-          <RouterProvider router={roteador} />
-        </div>
-
-        <ToastContainer position="top-center" autoClose={2000} theme="colored" />
-      </div>
+      <RouterProvider router={roteador} />
     </AppContextProvider>
   );
 }

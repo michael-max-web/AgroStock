@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { useAppContext } from "../../contexto/AppContext";
 import Avatar from "../Avatar/Avatar";
 import "./Cabecalho.css";
@@ -7,14 +9,14 @@ function Cabecalho({ noCard }) {
 
   return (
     <header className={noCard ? "cabecalho--no-card" : "cabecalho--topo"}>
-      <a href="/">
+      <Link to="/">
         <img src="/logo.png" alt="AgroStock Logo" />
-      </a>
+      </Link>
 
       {!noCard && usuarioLogado && (
-        <a href="/meu-perfil">
+        <Link to="/meu-perfil">
           <Avatar nome={usuarioLogado.nome} imagem={usuarioLogado.foto} />
-        </a>
+        </Link>
       )}
     </header>
   );
